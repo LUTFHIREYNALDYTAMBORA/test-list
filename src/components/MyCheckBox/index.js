@@ -4,7 +4,8 @@ import axios from "axios";
 export default class index extends Component {
   state = {
     data: [],
-    name: ''
+    name: '',
+    itemName: ''
   };
 
   componentDidMount() {
@@ -29,9 +30,20 @@ export default class index extends Component {
   }
 
   _handleChange = (e) => {
+      console.log(e.target.name);
       this.setState({
          [e.target.name]: e.target.value
       })
+  }
+
+  _handleChangeChild = (e, id) => {
+      console.log(id);
+      console.log(e.target.value);
+
+      this.setState({
+        [e.target.name]: e.target.value
+     })
+
   }
 
   _handleAddChecklist = () => {
@@ -87,6 +99,11 @@ export default class index extends Component {
     });
   }
 
+  _handleAddChild = (checklistId) => {
+      console.log(checklistId);
+      console.log(this.state.itemName);
+  }
+
   render() {
     const { data } = this.state;
     return (
@@ -106,6 +123,7 @@ export default class index extends Component {
                       <button style={{background: 'red'}} onClick={() => this._handleDeleteParent(val.id)}>delete parent</button>
                   </span>
                 </label>
+                <input name="itemName" placeholder="Add child" type="text"  onChange={(e) =>this._handleChangeChild(e, val.id)}/> <button onClick={() => this._handleAddChild(val.id)}>Add Child</button>
                 <ul>
                     {val.items && val.items.length && val.items.map((name) => (
 
